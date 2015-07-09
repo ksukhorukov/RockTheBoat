@@ -27,8 +27,7 @@ gem 'carrierwave', '~> 0.10.0'
 gem 'vk-ruby', '~> 1.0.2'
 gem 'pry-rails', '~> 0.3.4'
 gem 'ffprober', '~> 0.4.4'
-gem 'scissor', '~> 0.6.0'
-
+gem 'will_paginate', '~> 3.0.7'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
