@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709100733) do
+ActiveRecord::Schema.define(version: 20150709140521) do
+
+  create_table "chunks", force: :cascade do |t|
+    t.string   "chunk"
+    t.integer  "song_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "chunks", ["song_id"], name: "index_chunks_on_song_id"
 
   create_table "songs", force: :cascade do |t|
     t.datetime "created_at", null: false

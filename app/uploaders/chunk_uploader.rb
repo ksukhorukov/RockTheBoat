@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class TrackUploader < CarrierWave::Uploader::Base
+class ChunkUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -31,23 +31,6 @@ class TrackUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
-
-  process :set_bitrate 
-
-  def set_bitrate
-    ffprobe = Ffprober::Parser.from_file(current_path)
-    bitrate = ffprobe.audio_streams[0].bit_rate.to_i
-    if bitrate > 128000
-      infile  = current_path
-      outfile = current_path + '.tmp'
-      safe_system "ffmpeg -i #{infile} -ab 128k -f mp3 #{outfile}"
-      FileUtils.mv outfile, infile
-      @filename = File.basename(infile, File.extname(infile)) + '.mp3'
-      puts "SETING UP BITRATE"
-    end
-  end
-
-
   # Create different versions of your uploaded files:
   # version :thumb do
   #   process :resize_to_fit => [50, 50]
@@ -64,15 +47,5 @@ class TrackUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
-
-  def safe_system *args
-    system *args
-
-    if $?.exitstatus > 0
-      raise CarrierWave::ProcessingError,
-          "Couldn't process #{File.basename(current_path)}. " \
-          "Command failed: '#{args.join(' ')}'"
-    end
-  end
 
 end
