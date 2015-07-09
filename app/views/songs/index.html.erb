@@ -12,9 +12,9 @@
   <tbody>
     <% @songs.each do |song| %>
       <tr>
-        <td><%= link_to 'Show', song %></td>
-        <td><%= link_to 'Edit', edit_song_path(song) %></td>
-        <td><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= song.artist %></td>
+        <td><%= song.title %></td>
+        <td><%= link_to 'listen', song.track.url %></td>
       </tr>
     <% end %>
   </tbody>
