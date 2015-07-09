@@ -32,10 +32,15 @@ gem 'will_paginate', '~> 3.0.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-# gem 'unicorn'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'unicorn', '~> 4.9.0'
+ 
+group :development do 
+	gem 'capistrano', '~> 3.4.0'
+	gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

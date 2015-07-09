@@ -16,3 +16,8 @@
 !/log/.keep
 /tmp
 /public/uploads/*
+
+#Ignore config YMLs
+/config/database.yml
+
+.DS_Store
