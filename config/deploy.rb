@@ -36,20 +36,28 @@ set :repo_url, 'git@github.com:ksukhorukov/RockTheBoat.git'
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-before 'deploy:setup', 'rvm:install_rvm', 'rvm:install_ruby' 
-after 'deploy:update_code', :roles => :app do
-  # Здесь для примера вставлен только один конфиг с приватными данными - database.yml. Обычно для таких вещей создают папку /srv/myapp/shared/config и кладут файлы туда. При каждом деплое создаются ссылки на них в нужные места приложения.
-  run "rm -f #{current_release}/config/#{file}.yml"
-  run "ln -s #{deploy_to}/shared/config/#{file}.yml #{current_release}/config/#{file}.yml"
-end
+set :linked_files, %w{config/database.yml config/secrets.yml}
 
 after 'deploy:published', 'deploy:restart'
+after 'deploy:published', 'deploy:create_symlinkt'
 
 namespace :deploy do
+
 	desc 'Restart application'
 	task :restart do
 	  on roles(:app), in: :sequence, wait: 5 do
 	    execute 'service thin restart' 
 	  end
 	end
+
+	task :create_symlink do 
+		on roles(:app) do 
+			linked_files.each do |filename|
+				run "ln -s #{deploy_to}/shared/#{filename} #{current_release}/#{filename}"
+			end
+		end
+	end
+
 end
+
+
