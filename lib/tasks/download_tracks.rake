@@ -5,7 +5,7 @@ namespace :app do
 		token = ENV["VK_TOKEN"]
 		app = VK::Application.new(app_id: 4988400, version: '0.1', access_token: token)
 		query = 'Woodstock'
-		results = app.audio.search(q:  query, count: 10)
+		results = app.audio.search(q:  query, count: 20)
 		results.shift #we dont need the first element
 		audio_ids = []
 		results.each do |info|
