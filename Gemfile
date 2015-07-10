@@ -31,10 +31,12 @@ gem 'will_paginate', '~> 3.0.7'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use Unicorn as the app server
 
-gem 'unicorn', '~> 4.9.0'
- 
+group :production do 
+  gem 'therubyracer', '~> 0.12.2'
+  gem 'unicorn', '~> 4.9.0'
+end
+
 group :development do 
 	gem 'capistrano', '~> 3.4.0'
 	gem 'capistrano-rails'
