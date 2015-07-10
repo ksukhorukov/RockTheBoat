@@ -36,6 +36,15 @@ set :repo_url, 'git@github.com:ksukhorukov/RockTheBoat.git'
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+after :publishing, :restart
+
+desc 'Restart application'
+task :restart do
+  on roles(:app), in: :sequence, wait: 5 do
+    execute "service thin restart" 
+  end
+end
+
 namespace :deploy do
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do

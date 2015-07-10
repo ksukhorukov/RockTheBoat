@@ -35,7 +35,7 @@ gem 'will_paginate', '~> 3.0.7'
 
 group :production do 
   gem 'therubyracer', '~> 0.12.2'
-  gem 'unicorn', '~> 4.9.0'
+  gem 'thin', '~> 1.6.3' 
 end
 
 group :development do 
