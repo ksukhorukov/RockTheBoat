@@ -40,6 +40,8 @@ gem 'will_paginate', '~> 3.0.7'
 gem 'therubyracer', '~> 0.12.2'
 gem 'rails_config', '~> 0.4.2'
 gem 'whenever', require: false
+gem 'sidekiq', '~> 3.4.1'
+gem 'carrierwave_backgrounder', '~> 0.4.1'
 
 
 group :production do 
