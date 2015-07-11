@@ -39,7 +39,6 @@ set :repo_url, 'git@github.com:ksukhorukov/RockTheBoat.git'
 set :linked_files, %w{config/database.yml config/secrets.yml}
 
 after 'deploy:published', 'deploy:restart'
-after 'deploy:published', 'deploy:create_symlinkt'
 
 namespace :deploy do
 
@@ -48,14 +47,6 @@ namespace :deploy do
 	  on roles(:app), in: :sequence, wait: 5 do
 	    execute 'service thin restart' 
 	  end
-	end
-
-	task :create_symlink do 
-		on roles(:app) do 
-			linked_files.each do |filename|
-				run "ln -s #{deploy_to}/shared/#{filename} #{current_release}/#{filename}"
-			end
-		end
 	end
 
 end

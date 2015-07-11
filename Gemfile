@@ -33,9 +33,13 @@ gem 'will_paginate', '~> 3.0.7'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'therubyracer', '~> 0.12.2'
+gem 'bootstrap-sass', '~> 3.3.5.1'
+gem 'sass-rails', github: 'rails/sass-rails'
+gem 'autoprefixer-rails'
+
 
 group :production do 
-  gem 'therubyracer', '~> 0.12.2'
   gem 'thin', '~> 1.6.3' 
 end
 
