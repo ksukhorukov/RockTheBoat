@@ -38,6 +38,8 @@ gem 'will_paginate', '~> 3.0.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'therubyracer', '~> 0.12.2'
+gem 'rails_config', '~> 0.4.2'
+gem 'whenever', require: false
 
 
 group :production do 
