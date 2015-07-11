@@ -1,25 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Rock the boat!</h1>
+    <p>The best radio station ever</p>
+  </div>
+  <div class="container">
+    <table class="table  table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Artist</th>
+          <th>Song</th>
+          <th>Duration</th>
+          <th>Play</th>
+        </tr>
+      </thead>
 
-<h1>Listing Songs</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @songs.each do |song| %>
-      <tr>
-        <td><%= song.artist %></td>
-        <td><%= song.title %></td>
-        <td><%= link_to 'listen', song.track.url %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+      <tbody>
+        <% @songs.each do |song| %>
+          <tr>
+            <td><%= song.artist %></td>
+            <td><%= song.title %></td> 
+            <td><%= song.human_readable_duration %></td>
+            <td>
+              <audio controls preload="none">
+                <source src="<%= song.track.url %>" type="audio/mpeg">
+              </audio>
+            </td>    
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="container" align="center">
+      <%= will_paginate @songs, :renderer => BootstrapPagination::Rails %>
+    </div>
+  </div>
+</div>
 <br>
 
-<%= will_paginate @songs %>
+

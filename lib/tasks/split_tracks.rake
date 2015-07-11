@@ -7,7 +7,7 @@ namespace :app do
   		unless song.chunks.any?
   			song_path = song.track.file.path
   			song_basename = song.track.file.basename
-  			duration = song.duration
+  			duration = song.duration_seconds
   			counter = 0
   			(0..duration).step(60) do |x| 
   				system "ffmpeg -ss #{x} -i #{song_path} -c copy -t 60 #{song_basename}-chunk-#{counter}.mp3" 
