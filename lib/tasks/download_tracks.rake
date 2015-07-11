@@ -3,7 +3,7 @@ namespace :app do
 	desc "Download tracks from VK"
 	task :download_tracks => :environment do 
 		app = VK::Application.new(app_id: Settings.vk.app_id, version: '0.1', access_token: Settings.vk.token)
-		results = app.audio.search(q:  Settings.vk.query, count: 1)
+		results = app.audio.search(q:  Settings.vk.query, count: Settings.vk.count)
 		results.shift #we dont need the first element
 		audio_ids = []
 		results.each do |info|
@@ -17,6 +17,12 @@ namespace :app do
 												duration_seconds: duration_seconds,
 												human_readable_duration: Time.at(duration_seconds).utc.strftime("%H:%M:%S"))
 				song.track.download!(info['url'])
+				ffprobe = Ffprober::Parser.from_file(song.track.file.path)
+				
+				song.release_year = ffprobe.format.tags[:date] || 'unknown'
+				song.album =  ffprobe.format.tags[:album] || 'unknown'
+				song.genre =  ffprobe.format.tags[:genre] || 'unknown'
+
 				song.save!
 			end
 		end
