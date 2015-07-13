@@ -11,20 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150711210501) do
+ActiveRecord::Schema.define(version: 20150713121302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "chunks", force: :cascade do |t|
     t.string   "chunk"
-    t.integer  "song_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "part_number"
+    t.integer  "aid"
   end
 
-  add_index "chunks", ["song_id"], name: "index_chunks_on_song_id", using: :btree
+  add_index "chunks", ["aid"], name: "index_chunks_on_aid", using: :btree
 
   create_table "songs", force: :cascade do |t|
     t.datetime "created_at",                              null: false

@@ -9,7 +9,6 @@ set :output, "/tmp/cron_rocktheboat.log"
 
 every :day, :at => '10:00 pm' do 
 	rake 'app:download_tracks'
-	rake 'app:split_tracks'
 end
 #
 # every 2.hours do

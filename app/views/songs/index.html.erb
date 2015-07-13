@@ -14,6 +14,7 @@
           <th>Genre</th>
           <th>Duration</th>
           <th>Play</th>
+          <th>Parts</th>
         </tr>
       </thead>
 
@@ -30,7 +31,14 @@
               <audio controls preload="none">
                 <source src="<%= song.track.url %>" type="audio/mpeg">
               </audio>
-            </td>    
+            </td>  
+            <td>
+              <ul>
+              <% song.chunks.each do |part| %>
+                  <li><%= link_to "#{part.part_number+1}" , part.chunk.url, :class => "btn-sm btn-link" %></li>
+              <% end %>
+              </ul>
+            </td>  
           </tr>
         <% end %>
       </tbody>

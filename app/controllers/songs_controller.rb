@@ -4,7 +4,7 @@ class SongsController < ApplicationController
   # GET /songs
   # GET /songs.json
   def index
-    @songs = Song.paginate :per_page => 10, :page => params[:page]
+    @songs = Song.preload(:chunks).paginate :per_page => 5, :page => params[:page]
   end
 
   # GET /songs/1

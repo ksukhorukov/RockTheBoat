@@ -33,6 +33,8 @@ class TrackUploader < CarrierWave::Uploader::Base
 
 
   process :set_bitrate 
+  process :get_metadata
+  process :create_parts
 
   def set_bitrate
     ffprobe = Ffprober::Parser.from_file(current_path)
@@ -47,6 +49,33 @@ class TrackUploader < CarrierWave::Uploader::Base
     end
   end
 
+  def get_metadata
+      ffprobe = Ffprober::Parser.from_file(current_path)  
+      model.release_year = ffprobe.format.tags[:date] || 'unknown'
+      model.album =  ffprobe.format.tags[:album] || 'unknown'
+      model.genre =  ffprobe.format.tags[:genre] || 'unknown'
+      #model.save!
+  end
+
+  def create_parts
+    tmp_dir = Rails.root.join('/tmp/chunk')
+    FileUtils.mkdir(tmp_dir) unless Dir.exists?(tmp_dir)
+    FileUtils.cd tmp_dir
+    basename = File.basename current_path
+    duration = model.duration_seconds
+    counter = 0
+    (0..duration).step(60) do |x| 
+      system "ffmpeg -ss #{x} -i #{current_path} -c copy -t 60 #{basename}-chunk-#{counter}.mp3" 
+      part = Chunk.new
+      File.open("#{basename}-chunk-#{counter}.mp3") { |f| part.chunk = f }
+      part.part_number = counter
+      part.aid = model.aid
+      part.save!
+      counter += 1
+    end
+    FileUtils.rm Dir.glob('*.mp3')
+    puts "Chunks for #{current_path} created"
+  end
 
   # Create different versions of your uploaded files:
   # version :thumb do
