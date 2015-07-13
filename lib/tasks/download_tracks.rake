@@ -13,8 +13,8 @@ namespace :app do
 			pp info['url']
 			unless Song.find_by_aid(current_aid)
 				song = Song.new(aid: current_aid, 
-												title: info['title'], 
-												artist: info['artist'],
+												title: Filter.extract(info['title']), 
+												artist: Filter.extract(info['artist']),
 												duration_seconds: duration_seconds,
 												human_readable_duration: Time.at(duration_seconds).utc.strftime("%H:%M:%S"))
 				song.track.download!(info['url'])
