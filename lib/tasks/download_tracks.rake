@@ -10,6 +10,7 @@ namespace :app do
 			current_aid = info['aid']
 			audio_ids << current_aid
 			duration_seconds = info['duration']
+			pp info['url']
 			unless Song.find_by_aid(current_aid)
 				song = Song.new(aid: current_aid, 
 												title: info['title'], 
