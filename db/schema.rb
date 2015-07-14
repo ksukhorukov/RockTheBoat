@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713121302) do
+ActiveRecord::Schema.define(version: 20150713222232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,18 +27,18 @@ ActiveRecord::Schema.define(version: 20150713121302) do
   add_index "chunks", ["aid"], name: "index_chunks_on_aid", using: :btree
 
   create_table "songs", force: :cascade do |t|
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.string   "artist"
     t.string   "title"
     t.string   "track"
     t.integer  "aid"
     t.integer  "duration_seconds"
     t.string   "human_readable_duration"
-    t.string   "genre"
-    t.string   "release_year"
-    t.string   "album"
-    t.boolean  "track_processing",        default: false, null: false
+    t.string   "genre",                   default: "unknown"
+    t.string   "release_year",            default: "unknown"
+    t.string   "album",                   default: "unknown"
+    t.boolean  "track_processing",        default: false,     null: false
     t.string   "track_tmp"
   end
 

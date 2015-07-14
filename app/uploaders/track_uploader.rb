@@ -51,10 +51,14 @@ class TrackUploader < CarrierWave::Uploader::Base
 
   def get_metadata
       ffprobe = Ffprober::Parser.from_file(current_path)  
-      model.release_year = ffprobe.format.tags[:date] || 'unknown'
-      model.album =  ffprobe.format.tags[:album] || 'unknown'
-      model.genre =  ffprobe.format.tags[:genre] || 'unknown'
-      #model.save!
+      pp ffprobe 
+      puts "current path: #{current_path}"  
+      pp ffprobe.format   
+      if ffprobe.format.respond_to? :tags
+        model.release_year = ffprobe.format.tags[:date] || 'unknown'
+        model.album =  ffprobe.format.tags[:album] || 'unknown'
+        model.genre =  ffprobe.format.tags[:genre] || 'unknown'
+      end
   end
 
   def create_parts
